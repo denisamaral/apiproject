@@ -20,19 +20,11 @@ class ClientesApiModel extends CI_Model {
 
 		$clientes = $resultCli->result_array();
 
-		/*$this->db->select('*');
-		$this->db->where('idCliente', $idCliente);
-		$resultPlan = $this->db->get('clientesplanos');*/
-
-
-		/*select pl.idPlano, pl.nomePlano, cli.idCliente from planos as pl
-left join clientesplanos as cp on cp.idPlano = pl.idPlano
-left join clientes as cli on cp.idCliente = cli.idCliente and cli.idCliente  = 18*/
-
-		$this->db->select('pl.idPlano, pl.nomePlano, cli.idCliente');
+		$this->db->select('pl.idPlano, pl.nomePlano, pl.mensalidadePlano, cli.idCliente');
 		$this->db->from('planos as pl');
-		$this->db->join('clientesplanos as cp', 'cp.idPlano = pl.idPlano', 'LEFT');
+		$this->db->join('clientesplanos as cp', 'cp.idPlano = pl.idPlano and cp.idCliente = '.$idCliente, 'LEFT');
 		$this->db->join('clientes as cli', 'cp.idCliente = cli.idCliente and cli.idCliente = '.$idCliente, 'LEFT');
+		$this->db->group_by('pl.idPlano');
 
 		$resultPlan = $this->db->get();
 
@@ -42,6 +34,10 @@ left join clientes as cli on cp.idCliente = cli.idCliente and cli.idCliente  = 1
 			'clientes' 		=> $clientes,
 			'clientePlanos' => $clientePlanos
 		);
+
+		// var_dump($clientePlanos);
+
+		// exit();
 
 		//return $clientes->result_array() ;
 		return $dados;
