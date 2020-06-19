@@ -89,11 +89,13 @@
 
 									<?php
 
-										foreach($planos as $plano){
+										$iPlano = 0;
+
+										foreach($clientePlanos as $plano){
 
 											$checked = null;
 
-											if(!empty($clientePlanos)) $checked = ($plano['idPlano'] == $clientePlanos[0]['idPlano']) ? "checked" : null;
+											if(!empty($clientePlanos[$iPlano]['idCliente'])) $checked = "checked" ;
 
 											?>
 
@@ -102,7 +104,7 @@
 
 											<br>
 									<?php
-
+											$iPlano++;
 										}
 
 										?>
