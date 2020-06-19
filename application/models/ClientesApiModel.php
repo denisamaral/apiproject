@@ -20,9 +20,21 @@ class ClientesApiModel extends CI_Model {
 
 		$clientes = $resultCli->result_array();
 
-		$this->db->select('*');
+		/*$this->db->select('*');
 		$this->db->where('idCliente', $idCliente);
-		$resultPlan = $this->db->get('clientesplanos');
+		$resultPlan = $this->db->get('clientesplanos');*/
+
+
+		/*select pl.idPlano, pl.nomePlano, cli.idCliente from planos as pl
+left join clientesplanos as cp on cp.idPlano = pl.idPlano
+left join clientes as cli on cp.idCliente = cli.idCliente and cli.idCliente  = 18*/
+
+		$this->db->select('pl.idPlano, pl.nomePlano, cli.idCliente');
+		$this->db->from('planos as pl');
+		$this->db->join('clientesplanos as cp', 'cp.idPlano = pl.idPlano', 'LEFT');
+		$this->db->join('clientes as cli', 'cp.idCliente = cli.idCliente and cli.idCliente = '.$idCliente, 'LEFT');
+
+		$resultPlan = $this->db->get();
 
 		$clientePlanos = $resultPlan->result_array();
 
@@ -165,7 +177,7 @@ class ClientesApiModel extends CI_Model {
 			if($clientesplanos->num_rows() == 1){
 
 				if($resultclientesplanos[0]['idPlano'] == 1){
-					return array('erro' => true, 'msgError' => "Exclusao Proibida");
+					return array('erro' => true, 'msgError' => "Exclusão Proibida. Este cliente é de São Paulo e pertence ao plano Free.");
 				}
 
 			}
