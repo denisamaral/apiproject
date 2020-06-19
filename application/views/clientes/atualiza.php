@@ -100,7 +100,7 @@
 											?>
 
 											<input type="checkbox" id="planos<?= $plano['idPlano']; ?>" class="planos" name="planos[]" value="<?= $plano['idPlano']; ?>" <?= $checked ?>>
-											<label for="planos<?= $plano['idPlano']; ?>"> <?= $plano['nomePlano']; ?> </label>
+											<label for="planos<?= $plano['idPlano']; ?>"> <?= $plano['nomePlano']; ?> (R$ <?= $plano['mensalidadePlano']; ?>) </label>
 
 											<br>
 									<?php
